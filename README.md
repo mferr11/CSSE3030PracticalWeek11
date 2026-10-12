@@ -11,7 +11,7 @@ for Java that runs as JUnit tests.
 | 1 | Concepts and strategy (paper) | none |
 | 2 | Grammars (paper) | none |
 | 3 | Your first fuzz target | `Words`, `QuantityParser` |
-| 4 | Fuzzing bigger programs | `UrlCodec`, `TicketParser` |
+| 4 | Fuzzing bigger programs | `Names`, `TicketParser` |
 | 5 | Jazzer's SQL injection detector | `StudentDao` (in-memory H2 database) |
 
 Each class has its **contract in its Javadoc**. Work from the contract, not from the
@@ -45,7 +45,7 @@ cd CSSE3030PracticalWeek11
 |---|---|---|
 | `./gradlew fuzzFirstWord` | 3 | Fuzzes `FirstWordFuzzTest` (about 30 s) |
 | `./gradlew fuzzQuantity` | 3 | Fuzzes `QuantityFuzzTest` (about 30 s) |
-| `./gradlew fuzzUrlCodec` | 4 | Fuzzes `UrlCodecFuzzTest` (about 60 s) |
+| `./gradlew fuzzInitials` | 4 | Fuzzes `NamesFuzzTest` (about 60 s) |
 | `./gradlew fuzzTicket` | 4 | Fuzzes `TicketParserFuzzTest` (about 60 s) |
 | `./gradlew fuzzStudentDao` | 5 | Fuzzes `StudentDaoFuzzTest` (about 60 s) |
 | `./gradlew test` | any | Runs every JUnit test, and replays each fuzz target **once** without fuzzing (seconds) |
@@ -79,7 +79,7 @@ on. Run **one** of these from the project folder:
 
 ```bash
 git checkout checkpoint-after-part3 -- src/main   # Words fixed (end of Part 3)
-git checkout checkpoint-after-part4 -- src/main   # Words, UrlCodec and TicketParser fixed (end of Part 4)
+git checkout checkpoint-after-part4 -- src/main   # Words, Names and TicketParser fixed (end of Part 4)
 ```
 
 Each command replaces only the files under `src/main` with the versions from that

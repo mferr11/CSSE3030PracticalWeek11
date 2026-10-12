@@ -68,6 +68,6 @@ def registerFuzz = { String name, String desc, String className ->
 
 registerFuzz('fuzzFirstWord', 'Part 3: fuzz Words.firstWord (about 30 s)', 'FirstWordFuzzTest')
 registerFuzz('fuzzQuantity', 'Part 3: fuzz QuantityParser.parseQuantity (about 30 s)', 'QuantityFuzzTest')
-registerFuzz('fuzzUrlCodec', 'Part 4: fuzz UrlCodec.decode (about 60 s)', 'UrlCodecFuzzTest')
+registerFuzz('fuzzInitials', 'Part 4: fuzz Names.initials (about 60 s)', 'NamesFuzzTest')
 registerFuzz('fuzzTicket', 'Part 4: fuzz TicketParser.parse (about 60 s)', 'TicketParserFuzzTest')
 registerFuzz('fuzzStudentDao', 'Part 5: fuzz StudentDao.findNamesById (about 60 s)', 'StudentDaoFuzzTest')
