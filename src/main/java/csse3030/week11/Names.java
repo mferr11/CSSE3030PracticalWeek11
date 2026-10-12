@@ -4,7 +4,7 @@ package csse3030.week11;
 public class Names {
     /**
      * Returns the first letter of each word of {@code fullName}, in upper case
-     * ("Ada Lovelace" gives "AL"). Words are separated by one or more spaces;
+     * ("Tim Bradford" gives "TB"). Words are separated by one or more spaces;
      * leading and trailing spaces are ignored. An empty or all-space name
      * throws {@link IllegalArgumentException}. No other exception type may escape.
      */
