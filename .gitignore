@@ -6,6 +6,7 @@ out/
 *.iml
 .vscode/
 !gradle/wrapper/gradle-wrapper.jar
+practical_w11_tutor.tex
 
 # Jazzer's generated working corpus (safe to delete).
 .cifuzz-corpus/
