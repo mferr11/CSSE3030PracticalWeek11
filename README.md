@@ -50,6 +50,17 @@ cd CSSE3030PracticalWeek11
 | `./gradlew fuzzStudentDao` | 5 | Fuzzes `StudentDaoFuzzTest` (about 60 s) |
 | `./gradlew test` | any | Runs every JUnit test, and replays each fuzz target **once** without fuzzing (seconds) |
 
+The three JUnit test skeletons (`NamesTest`, `TicketParserTest`, `StudentDaoTest`) **fail on
+purpose**, with a `TODO ...: not written yet` message, until you write them. The fuzz
+target skeletons do not: a fuzz target only fails when Jazzer finds something. To run one
+test class, for example `NamesTest`:
+
+```bash
+./gradlew test --tests '*NamesTest'
+```
+
+(On Windows PowerShell write `.\gradlew test --tests '*NamesTest'`.)
+
 A `fuzz...` task stops at the first finding or when the target's `maxDuration` is up, and
 always runs again when you re-run it.
 
