@@ -9,9 +9,4 @@ class TicketParserTest {
     void rejectsNegativeQuantity() {
         // TODO 4.4: assert that the input from your finding throws ParseException
     }
-
-    @Test
-    void rejectsMalformedHolderEscape() {
-        // TODO 4.5: assert that the input from your finding throws ParseException
-    }
 }

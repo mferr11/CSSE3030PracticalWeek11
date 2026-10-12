@@ -10,12 +10,7 @@ class StudentDaoTest {
     private final StudentDao dao = new StudentDao(TestDb.connect());
 
     @Test
-    void findsAliceById() throws SQLException {
-        // TODO 5.1: assert that findNamesById("s1001") returns exactly ["Alice"]
-    }
-
-    @Test
     void injectionIdMatchesNoStudent() throws SQLException {
-        // TODO 5.2: assert that findNamesById("x' OR '1'='1") returns an empty list
+        // TODO 5.1: assert that findNamesById("x' OR '1'='1") returns an empty list
     }
 }

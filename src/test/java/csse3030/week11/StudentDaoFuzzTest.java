@@ -10,7 +10,7 @@ class StudentDaoFuzzTest {
     @FuzzTest(maxDuration = "60s")
     void lookupByIdIsSafe(FuzzedDataProvider data) {
         String id = data.consumeRemainingAsString();
-        // TODO 5.3: call dao.findNamesById with id, and accept only
+        // TODO 5.2: call dao.findNamesById with id, and accept only
         //           the exception the contract allows
     }
 }
