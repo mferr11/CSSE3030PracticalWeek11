@@ -7,11 +7,14 @@ out/
 .vscode/
 !gradle/wrapper/gradle-wrapper.jar
 
-# Jazzer writes crash-<hash> / timeout-<hash> / slow-unit-<hash> reproducer files
-# into the directory Gradle runs the tests from (the project root).
-# NOTE: src/test/resources/** (Jazzer's regression inputs) is deliberately NOT ignored.
-crash-*
-timeout-*
-slow-unit-*
-oom-*
-leak-*
+# Jazzer's generated working corpus (safe to delete).
+.cifuzz-corpus/
+
+# Anchored to the project root, so these do NOT match Jazzer's findings in
+# src/test/resources/**/<Class>Inputs/<method>/. Those are regression inputs:
+# they are replayed by ./gradlew test, and you are meant to keep them.
+/crash-*
+/timeout-*
+/slow-unit-*
+/oom-*
+/leak-*

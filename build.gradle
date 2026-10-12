@@ -34,9 +34,53 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+// Show each test's name and result, and the full exception (with cause) for failures.
+tasks.withType(Test).configureEach {
     testLogging {
         events 'passed', 'failed', 'skipped'
         exceptionFormat 'full'
-        showStandardStreams = true
     }
 }
+
+// --- Per-part tasks ----------------------------------------------------------
+
+// Plain JUnit tests (no Jazzer fuzzing).
+def registerPlain = { String name, String desc, List<String> classNames ->
+    tasks.register(name, Test) {
+        group = 'verification'
+        description = desc
+        useJUnitPlatform()
+        testClassesDirs = sourceSets.test.output.classesDirs
+        classpath = sourceSets.test.runtimeClasspath
+        classNames.each { include "csse3030/week11/${it}.class" }
+        // Show the fuzzers' printed summaries (valid / rejected counts and so on).
+        testLogging.showStandardStreams = true
+    }
+}
+
+// Jazzer tests in FUZZING mode. A plain `./gradlew test` leaves JAZZER_FUZZ unset, so
+// Jazzer only replays saved inputs (regression mode) and finishes quickly.
+def registerFuzz = { String name, String desc, List<String> classNames ->
+    tasks.register(name, Test) {
+        group = 'verification'
+        description = desc
+        useJUnitPlatform()
+        testClassesDirs = sourceSets.test.output.classesDirs
+        classpath = sourceSets.test.runtimeClasspath
+        classNames.each { include "csse3030/week11/${it}.class" }
+        environment 'JAZZER_FUZZ', '1'
+        // Fuzzing is nondeterministic and has no declared inputs: never skip as up-to-date.
+        outputs.upToDateWhen { false }
+    }
+}
+
+registerPlain('testQ2', 'Part 2: random and mutation fuzzers, TicketParser regression tests',
+        ['RandomFuzzerTest', 'MutationFuzzerTest', 'TicketParserRegressionTest'])
+registerFuzz('testQ3', 'Part 3: Jazzer fuzzing of UrlCodec (about 60 s)',
+        ['UrlCodecFuzzTest', 'UrlCodecRegressionTest'])
+registerFuzz('testQ4', 'Part 4: StudentDao unit tests and Jazzer fuzzing (about 60 s)',
+        ['StudentDaoTest', 'StudentDaoFuzzTest'])
+registerFuzz('testQ5', 'Part 5: Jazzer fuzzing of TicketParser (about 60 s)',
+        ['TicketParserFuzzTest', 'TicketParserRegressionTest'])
