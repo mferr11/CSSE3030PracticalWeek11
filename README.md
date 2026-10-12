@@ -102,6 +102,21 @@ If a saved input is failing and you no longer want it, delete that one file. Jaz
 scratch corpus in `.cifuzz-corpus/` is safe to delete at any time. Neither it nor the
 `crash-...` files in the project folder are committed (see `.gitignore`).
 
+## Seed inputs (Q5.2) and comparing runs
+
+The same `<TestClass>Inputs/<testMethod>/` folder doubles as the **seed corpus**: every file
+in it is also fed to the fuzzer as a starting input when you run a `testQ` task. To seed
+`TicketParserFuzzTest`, create a file whose bytes are the seed, for example `TKT1:alice:2`:
+
+```bash
+mkdir -p src/test/resources/csse3030/week11/TicketParserFuzzTestInputs/parseOnlyThrowsParseException
+printf 'TKT1:alice:2' > src/test/resources/csse3030/week11/TicketParserFuzzTestInputs/parseOnlyThrowsParseException/valid-ticket
+```
+
+Jazzer also keeps what it learns in `.cifuzz-corpus/` and **reuses it on the next run**. To
+compare a run without a seed to a run with one, delete `.cifuzz-corpus/` (and any seed file)
+before each run, otherwise the second run starts from everything the first one learned.
+
 ## If you fall behind
 
 If you did not finish a Part, you can load the fixed source for the earlier Parts and
