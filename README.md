@@ -60,31 +60,45 @@ about 60 seconds.
 
 ## Where Jazzer saves what it finds
 
-When Jazzer finds a failing input it writes it to a file named `crash-<hash>` inside
+When Jazzer finds a failing input it writes it to a file named `crash-<hash>`:
 
+- on a fresh clone, into the **project folder** (next to `build.gradle`);
+- if the folder `src/test/resources` already exists, straight into
+  `src/test/resources/csse3030/week11/<TestClass>Inputs/<testMethod>/`
+  (Jazzer creates the sub-folders for you).
+
+That second folder is Jazzer's **regression input folder**, for example
+`src/test/resources/csse3030/week11/UrlCodecFuzzTestInputs/decodeNeverThrowsUnexpectedly/`.
+**Every file in it is replayed as a test case in every run**, including a plain
+`./gradlew test`. A `crash-...` file sitting in the project folder is *not* replayed.
+
+To keep a finding as a regression input (Q3.4), move it into the folder for that test:
+
+```bash
+mkdir -p src/test/resources/csse3030/week11/UrlCodecFuzzTestInputs/decodeNeverThrowsUnexpectedly
+mv crash-<hash> src/test/resources/csse3030/week11/UrlCodecFuzzTestInputs/decodeNeverThrowsUnexpectedly/
 ```
-src/test/resources/csse3030/week11/<TestClass>Inputs/<testMethod>/
+
+(Use your own `<hash>`, and the `<TestClass>Inputs/<testMethod>` names of the test you are
+working on. In PowerShell use `New-Item -ItemType Directory -Force <folder>` and `Move-Item`.)
+
+You can also add an input of your own by creating a file there: the file's bytes are the
+input. For example, for the input `abc%`:
+
+```bash
+printf 'abc%%' > src/test/resources/csse3030/week11/UrlCodecFuzzTestInputs/decodeNeverThrowsUnexpectedly/truncated-escape
 ```
 
-for example `src/test/resources/csse3030/week11/UrlCodecFuzzTestInputs/decodeNeverThrowsUnexpectedly/`.
+(PowerShell: `Set-Content -NoNewline -Encoding ascii -Path <that file> -Value 'abc%'`)
 
-Every file in that folder is replayed as a test case, in **every** run, including a plain
-`./gradlew test`. So:
+Once an input is saved there:
 
-- Until you fix the bug, `./gradlew test` fails on that saved input (that is a regression test working).
-- After you fix it, the saved input passes and keeps protecting you.
-- To add your own input (Q3.4), put a file in that folder. The file's bytes are the input.
-  For example, for the input `abc%`:
+- until you fix the bug, `./gradlew test` fails on it (a regression test doing its job);
+- after you fix it, it passes and keeps protecting you.
 
-  ```bash
-  mkdir -p src/test/resources/csse3030/week11/UrlCodecFuzzTestInputs/decodeNeverThrowsUnexpectedly
-  printf 'abc%%' > src/test/resources/csse3030/week11/UrlCodecFuzzTestInputs/decodeNeverThrowsUnexpectedly/truncated-escape
-  ```
-
-  (PowerShell: `Set-Content -NoNewline -Encoding ascii -Path <that file> -Value 'abc%'`)
-
-If your tests fail on a `crash-...` file you no longer want, delete that one file.
-Jazzer's scratch corpus in `.cifuzz-corpus/` is safe to delete at any time.
+If a saved input is failing and you no longer want it, delete that one file. Jazzer's
+scratch corpus in `.cifuzz-corpus/` is safe to delete at any time. Neither it nor the
+`crash-...` files in the project folder are committed (see `.gitignore`).
 
 ## If you fall behind
 
@@ -110,4 +124,5 @@ what changed; `git checkout main -- src/main` puts back the original code.)
 | Gradle behaves strangely | `./gradlew clean`, then run the task again |
 | Download errors on first run | Check you have internet access to Maven Central and try again |
 | A fuzz run seems stuck | Wait: it stops after about 60 s. Press Ctrl+C if you must |
+| `Filename too long` when cloning (Windows) | Clone into a short path such as `C:\code\`, or run `git config --global core.longpaths true` |
 | Still stuck | Ask your tutor |
