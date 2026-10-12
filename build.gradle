@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+group = 'csse3030'
+version = '1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.14.4'
+    jazzerVersion = '0.30.0'
+    h2Version = '2.5.252'
+}
+
+dependencies {
+    testImplementation platform("org.junit:junit-bom:${junitVersion}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Jazzer: coverage-guided fuzzing as JUnit tests (Parts 3-5)
+    testImplementation "com.code-intelligence:jazzer-junit:${jazzerVersion}"
+
+    // In-memory database for StudentDao (Part 4)
+    testRuntimeOnly "com.h2database:h2:${h2Version}"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'failed', 'skipped'
+        exceptionFormat 'full'
+        showStandardStreams = true
+    }
+}

@@ -1,0 +1,17 @@
+.gradle/
+build/
+bin/
+out/
+.idea/
+*.iml
+.vscode/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Jazzer writes crash-<hash> / timeout-<hash> / slow-unit-<hash> reproducer files
+# into the directory Gradle runs the tests from (the project root).
+# NOTE: src/test/resources/** (Jazzer's regression inputs) is deliberately NOT ignored.
+crash-*
+timeout-*
+slow-unit-*
+oom-*
+leak-*
