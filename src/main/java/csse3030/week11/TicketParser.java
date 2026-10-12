@@ -7,7 +7,7 @@ package csse3030.week11;
  * <ul>
  *   <li>The input starts with the literal prefix {@code TKT1:}.</li>
  *   <li>After the prefix there are exactly two {@code :}-separated fields: the holder
- *       (plain text) and the quantity.</li>
+ *       (any text without a colon) and the quantity.</li>
  *   <li>The quantity is a decimal integer between 1 and 10 inclusive.</li>
  *   <li>On success, {@code parse} returns a {@link Ticket} whose {@code seatIds} are
  *       {@code 1..quantity}.</li>

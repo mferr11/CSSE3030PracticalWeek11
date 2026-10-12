@@ -17,6 +17,7 @@ import java.util.List;
  *       unique id and an empty list if there is no match.</li>
  *   <li>The {@code id} is untrusted user input. It is only ever a value to compare
  *       against and must never change the structure of the query that runs.</li>
+ *   <li>A database error is reported by throwing {@link SQLException}.</li>
  * </ul>
  */
 public class StudentDao {
