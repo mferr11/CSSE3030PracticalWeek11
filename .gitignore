@@ -10,9 +10,8 @@ out/
 # Jazzer's generated working corpus (safe to delete).
 .cifuzz-corpus/
 
-# Anchored to the project root, so these do NOT match Jazzer's findings in
-# src/test/resources/**/<Class>Inputs/<method>/. Those are regression inputs:
-# they are replayed by ./gradlew test, and you are meant to keep them.
+# Inputs that crashed a fuzz target. Anchored to the project root. Keep a finding as a
+# JUnit regression test instead.
 /crash-*
 /timeout-*
 /slow-unit-*
