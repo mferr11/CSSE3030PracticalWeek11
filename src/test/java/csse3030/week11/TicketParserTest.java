@@ -1,0 +1,17 @@
+package csse3030.week11;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
+
+class TicketParserTest {
+    @Test
+    void rejectsNegativeQuantity() {
+        // TODO 4.4: assert that the input from your finding throws ParseException
+    }
+
+    @Test
+    void rejectsMalformedHolderEscape() {
+        // TODO 4.5: assert that the input from your finding throws ParseException
+    }
+}
