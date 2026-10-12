@@ -73,6 +73,9 @@ def registerFuzz = { String name, String desc, List<String> classNames ->
         environment 'JAZZER_FUZZ', '1'
         // Fuzzing is nondeterministic and has no declared inputs: never skip as up-to-date.
         outputs.upToDateWhen { false }
+        // Backstop only. Harnesses set @FuzzTest(maxDuration = "60s"); a @FuzzTest with no
+        // maxDuration would otherwise run for Jazzer's default of 5 minutes.
+        timeout = Duration.ofMinutes(3)
     }
 }
 

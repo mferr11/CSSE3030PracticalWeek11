@@ -55,8 +55,10 @@ Part 1 is on paper and has no task.
   failing input, as text and as Base64, just above the failure.
 - The full report for a run is in `build/reports/tests/<task>/index.html`.
 
-A fuzzing task re-runs every time. If it never seems to finish, it stops by itself after
-about 60 seconds.
+A fuzzing task re-runs every time and stops by itself after about 60 seconds, because your
+harness is annotated `@FuzzTest(maxDuration = "60s")`. Without `maxDuration`, Jazzer would fuzz
+for 5 minutes, so the Gradle fuzzing tasks give up after 3 minutes with
+`Timeout has been exceeded`. If you see that, check your `@FuzzTest` annotation.
 
 ## Where Jazzer saves what it finds
 
@@ -123,6 +125,6 @@ what changed; `git checkout main -- src/main` puts back the original code.)
 | Want to undo your edits to one file | `git checkout -- path/to/File.java` (this discards your edits to it) |
 | Gradle behaves strangely | `./gradlew clean`, then run the task again |
 | Download errors on first run | Check you have internet access to Maven Central and try again |
-| A fuzz run seems stuck | Wait: it stops after about 60 s. Press Ctrl+C if you must |
+| A fuzz run seems stuck | Wait: it stops after about 60 s (3 minutes at most). Press Ctrl+C if you must |
 | `Filename too long` when cloning (Windows) | Clone into a short path such as `C:\code\`, or run `git config --global core.longpaths true` |
 | Still stuck | Ask your tutor |
